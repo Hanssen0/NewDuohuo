@@ -6,6 +6,12 @@
                         top_right: (stage % 4 == 2 && stage % 2 == 0),
                         bottom_right: (stage % 4 == 1 && stage % 2 == 1),
                         bottom_left: (stage % 4 == 3 && stage % 2 == 1)}">
+      <div id="cover-title" v-bind:style="{color: title_color}"
+           v-bind:class="{title_top_left: (stage % 4 == 0 && stage % 2 == 0),
+                          title_top_right: (stage % 4 == 2 && stage % 2 == 0),
+                          title_bottom_right: (stage % 4 == 1 && stage % 2 == 1),
+                          title_bottom_left: (stage % 4 == 3 && stage % 2 == 1)}"
+        >{{title}}</div>
     </div>
     <div id="main-view">
       <router-view></router-view>
@@ -17,7 +23,7 @@
 </template>
 <script>
 var PagesHandler = {
-  Init: function(ChangeRouter, ChangeSize) {
+  Init: function(ChangeRouter, ChangeTitle, ChangeSize) {
     var height = document.body.clientHeight;
     var interval_ = height * 0.382;
     var animation_ = height;
@@ -33,6 +39,7 @@ var PagesHandler = {
           ...    */
     var pages_ = new Array();
     var stage_ = -1;
+    var title_stage = -1;
     var diagonal_ =
         Math.ceil(Math.sqrt(Math.pow(document.body.clientWidth, 2) +
                             Math.pow(animation_, 2)));
@@ -42,8 +49,14 @@ var PagesHandler = {
     }
     var SwitchRouter = function(step) {
       if (stage_ != step) {
-        ChangeRouter(pages_[step])
+        ChangeRouter(pages_[step].router);
         stage_ = step;
+      }
+    }
+    var SwitchTitle = function(step) {
+      if (title_stage != step) {
+        ChangeTitle(pages_[step].title, pages_[step].color);
+        title_stage = step;
       }
     }
     this.Push = function(page) {
@@ -56,18 +69,21 @@ var PagesHandler = {
       if (0 <= scroll && scroll < interval_) {
         // Interval
         SwitchRouter(step);
+        SwitchTitle(step);
         ChangeSize("0px");
         return step * 2;
       }else if (interval_ <= scroll &&
                 scroll < interval_ + animation_/2) {
         // Start animation
         SwitchRouter(step);
+        SwitchTitle(step + 1);
         ChangeSize(Math.max(distance(scroll - interval_), 0) + "px");
         return step * 2;
       }else if (interval_ + animation_/2 <= scroll &&
                 scroll < interval_ + animation_) {
         // End animation
         SwitchRouter(step + 1);
+        SwitchTitle(step + 1);
         ChangeSize(Math.max(distance(interval_ + animation_ - scroll), 0) + "px");
         return step * 2 + 1;
       }
@@ -80,7 +96,9 @@ export default {
     return {
       cover_size: "0px",
       indicator_pos: "6.18vh",
-      stage: 0
+      stage: 0,
+      title: "",
+      title_color: "#000"
     };
   }, methods: {
     SwitchPage: function(e) {
@@ -91,10 +109,12 @@ export default {
     }
   }, mounted: function() {
     PagesHandler.Init((router) => { this.$router.replace(router); },
+                      (title, color) => {
+                        this.title = title,this.title_color = color; },
                       (size) => { this.cover_size = size; });
-    PagesHandler.Push("/");
-    PagesHandler.Push("/introduction");
-    PagesHandler.Push("/history");
+    PagesHandler.Push({router: "/", title: "", color: "#000"});
+    PagesHandler.Push({router: "/introduction", title: "我们是谁", color: "#ffcdd2"});
+    PagesHandler.Push({router: "/history", title: "我们做过什么", color: "#c8e6c9"});
     // Three pages now
     PagesHandler.SwitchPage(0);
   }
@@ -126,6 +146,10 @@ export default {
   border-radius: 100%;
   background-color: #fff;
   box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 .top_left {
   top: 0;
@@ -146,6 +170,28 @@ export default {
   bottom: 0;
   right: 0;
   transform: translate(50%, 50%);
+}
+#cover-title {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: 23.6vh;
+}
+.title_top_left {
+  transform: translate(50%, 50%);
+}
+.title_top_right {
+  transform: translate(-50%, 50%);
+}
+.title_bottom_left {
+  transform: translate(50%, -50%);
+}
+.title_bottom_right {
+  transform: translate(-50%, -50%);
 }
 #scroll-indicator {
   position: fixed;
