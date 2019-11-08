@@ -32,7 +32,7 @@ var PagesHandler = {
        ----------
           ...    */
     var pages_ = new Array();
-    var stage_ = 0;
+    var stage_ = -1;
     var diagonal_ =
         Math.ceil(Math.sqrt(Math.pow(document.body.clientWidth, 2) +
                             Math.pow(animation_, 2)));
@@ -96,6 +96,7 @@ export default {
     PagesHandler.Push("/introduction");
     PagesHandler.Push("/history");
     // Three pages now
+    PagesHandler.SwitchPage(0);
   }
 }
 </script>

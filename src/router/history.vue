@@ -1,6 +1,9 @@
 <template>
   <div id="history-background">
-    <p id="what-we-did">Linux mirror</p>
+    <div id="history-project-image"></div>
+    <div id="history-project-content">
+      <p id="what-we-did">黑客马拉松</p>
+    </div>
   </div>
 </template>
 <style>
@@ -11,11 +14,26 @@
   width: 100vw;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+}
+#history-project-image {
+  width: 38.2vw;
+  height: 100vh;
+  background: url(../assets/hackfire.jpg);
+  background-size: cover;
+  background-position: 50%;
+  flex-shrink: 0;
+}
+#history-project-content {
+  width: 61.8vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 #what-we-did {
-  font-size: 250px;
+  font-size: 150px;
   color: rgba(255, 255, 255, 1);
 }
 </style>

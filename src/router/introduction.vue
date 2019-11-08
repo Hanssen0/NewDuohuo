@@ -1,42 +1,43 @@
 <template>
-  <div id="introduction-background">
-    <img src="../assets/TransLOGO.svg" id="introduction-LOGO"></img>
-    <div>
-      <p id="introduction-who-are-we">我们是一个由热爱 IT 的开发者们组成的校园团队。</p>
-      <p class="introduction-us">我们由普通的大学生组成，试图成为不普通的开发者团队。</p>
-      <p class="introduction-us">欢迎加入我们，说不定你就是那个被选中的家伙呢。</p>
+  <div>
+    <div id="introduction-background"> </div>
+    <div id="introduction-field">
+      <img src="../assets/TransLOGO.svg" id="introduction-LOGO"></img>
+      <p class="introduction-us">我们由普通的大学生组成，试图成为不普通的团队</p>
+      <p class="introduction-us">欢迎加入我们，说不定你就是那个被选中的家伙</p>
     </div>
   </div>
 </template>
 <style>
 #introduction-background {
-  background: #ffcdd2;
-  background-size: cover;
-  height: 100vh;
+  height: 38.2vh;
   width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-direction: column;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  background: #ffcdd2;
+}
+#introduction-field {
+  padding-top: 38.55vh;
+  width: 100vw;
+  height: 61.8vh;
+  background: #ef9a9a;
+  position: relative;
 }
 #introduction-LOGO {
   width: 38.2vh;
   height: 38.2vh;
-  padding: 11.8vh;
+  position: absolute;
+  top: 0;
+  left: 50vw;
+  box-shadow: 0 0 0 3.353vh rgba(229, 115, 115, 0.237),
+              0 0 0 5.425vh rgba(229, 115, 115, 0.145),
+              0 0 0 6.707vh rgba(229, 115, 115, 0.236);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
 }
 .introduction-us {
-  font-size: 5.06vh;
+  font-size: 2.81vw;
   color: rgba(255, 255, 255, 1);
+  transform: translateY(-50%);
   margin: 0;
-}
-#introduction-who-are-we {
-  font-size: 7.74vh;
-  color: rgba(255, 255, 255, 1);
-  margin: 0;
-  margin-bottom: 2.39vh;
 }
 </style>
 <script>
