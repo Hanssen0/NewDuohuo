@@ -93,7 +93,8 @@ export default {
   }, methods: {
     InvertBackgroundDirection: function() {
       if (this.position == 0) {
-        this.position = -this.$refs["content"].offsetWidth + document.body.clientWidth;
+        this.position = -this.$refs["content"].offsetWidth +
+                        document.body.clientWidth;
       }else {
         this.position = 0;
       }
