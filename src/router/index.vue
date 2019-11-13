@@ -1,13 +1,13 @@
 <template>
-  <div id="index-background">
-    <div id="index-word" v-bind:style="{height: test}">
-      <p id="index-object">We're</p>
-      <p ref="group-name" id="index-subject">Duo Huo</p>
+  <div id="background">
+    <div id="word" v-bind:style="{height: test}">
+      <p id="object">We're</p>
+      <p ref="group-name" id="subject">Duo Huo</p>
     </div>
   </div>
 </template>
-<style>
-#index-background {
+<style scoped>
+#background {
   background: #bbdefb;
   background-size: cover;
   height: 100vh;
@@ -17,22 +17,20 @@
   justify-content: center;
   flex-direction: column;
 }
-#index-word {
+#word {
   display:flex;
   align-items: center;
   justify-content: flex-end;
   flex-direction: column;
 }
-#index-subject,
-#index-object {
+#subject,
+#object {
   margin: 0;
   line-height: 90%;
-}
-#index-object {
   font-size: 80px;
   color: rgba(255, 255, 255, 0.5);
 }
-#index-subject {
+#subject {
   font-size: 250px;
   color: rgba(255, 255, 255, 1);
 }
