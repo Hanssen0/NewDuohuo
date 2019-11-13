@@ -1,6 +1,7 @@
 <template>
   <div id="viewport-cutter">
-    <div id="history-background" :style="{left: position + 'px'}" ref="content">
+    <div id="history-background" :style="{left: position + 'px'}" ref="content"
+      @transitionend="InvertBackgroundDirection">
       <div v-for="(item, index) in projects"
         class="history-items" v-bind:style="{background: item.color}">
         <div class="history-project-images" :id="[item.image]"></div>
@@ -20,21 +21,12 @@
 }
 #history-background {
   background: #c8e6c9;
-  background-size: cover;
   height: 100vh;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
   position: relative;
-  animation-name: showall;
-  animation-duration: 5s;
-  animation-direction: alternate;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
-}
-@keyframes showall {
-  0% { left: 0; }
-  100% { left: -100vh; }
+  transition: left 5s ease-in-out;
 }
 .history-items {
   position: relative;
@@ -99,6 +91,13 @@ export default {
       projects: new Array(),
       position: 0 };
   }, methods: {
+    InvertBackgroundDirection: function() {
+      if (this.position == 0) {
+        this.position = -this.$refs["content"].offsetWidth + document.body.clientWidth;
+      }else {
+        this.position = 0;
+      }
+    }
   }, mounted: function() {
     this.projects.push({ title: "黑客马拉松",
                          context: `HackFire 由多火携手计软院举办，
@@ -114,6 +113,7 @@ export default {
                          context: `技术上已经没有问题，但正如所有wiki一样，需要有更多的人来编辑才有意义......`,
                          color: "#a5d6a7",
                          image: "history-project-image-three" });
+    this.$nextTick(() => { this.position = -this.$refs["content"].offsetWidth + document.body.clientWidth; });
   }
 }
 </script>
