@@ -1,6 +1,6 @@
 <template>
   <div id="app" @scroll="SwitchPage">
-    <div id="placeholder"></div>
+    <div id="placeholder" :style="{height: total_height + 'px'}"></div>
     <div id="cover" v-bind:style="{width: cover_size, height: cover_size}"
          v-bind:class="{top_left: (stage % 4 == 0 && stage % 2 == 0),
                         top_right: (stage % 4 == 2 && stage % 2 == 0),
@@ -23,7 +23,7 @@
 </template>
 <script>
 var PagesHandler = {
-  Init: function(ChangeRouter, ChangeTitle, ChangeSize) {
+  Init: function(ChangeRouter, ChangeTitle, ChangeSize, ChangeTotalHeight) {
     var height = document.body.clientHeight;
     var interval_ = height * 0.382;
     var animation_ = height;
@@ -61,6 +61,7 @@ var PagesHandler = {
     }
     this.Push = function(page) {
       pages_.push(page);
+      ChangeTotalHeight(pages_.length * (height + interval_) - interval_);
     }
     this.SwitchPage = function(scroll) {
       var step = Math.floor(scroll / (interval_ + animation_));
@@ -98,7 +99,8 @@ export default {
       indicator_pos: "6.18vh",
       stage: 0,
       title: "",
-      title_color: "#000"
+      title_color: "#000",
+      total_height: 0
     };
   }, methods: {
     SwitchPage: function(e) {
@@ -111,7 +113,8 @@ export default {
     PagesHandler.Init((router) => { this.$router.replace(router); },
                       (title, color) => {
                         this.title = title,this.title_color = color; },
-                      (size) => { this.cover_size = size; });
+                      (size) => { this.cover_size = size; },
+                      (height) => { this.total_height = height; });
     PagesHandler.Push({router: "/", title: "", color: "#000"});
     PagesHandler.Push({router: "/introduction", title: "我们是谁", color: "#ffcdd2"});
     PagesHandler.Push({router: "/history", title: "我们做过什么", color: "#c8e6c9"});
@@ -131,7 +134,6 @@ export default {
   overflow: auto;
 }
 #placeholder {
-  height: 400vh;
   width: 100%;
 }
 #main-view {
