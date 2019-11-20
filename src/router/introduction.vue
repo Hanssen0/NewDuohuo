@@ -29,13 +29,14 @@
   left: 50vw;
   box-shadow: 0 0 0 3.353vh rgba(229, 115, 115, 0.237),
               0 0 0 5.425vh rgba(229, 115, 115, 0.145),
-              0 0 0 6.707vh rgba(229, 115, 115, 0.236);
+              0 0 0 6.707vh rgba(229, 115, 115, 0.236),
+              0 0 0 7.498vh #ffcdd2;
   border-radius: 50%;
   transform: translate(-50%, -50%);
 }
 .us {
   font-size: 2.81vw;
-  color: rgba(255, 255, 255, 1);
+  color: #fff;
   transform: translateY(-50%);
   margin: 0;
 }
